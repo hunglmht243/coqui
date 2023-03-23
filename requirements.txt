@@ -45,3 +45,4 @@ underthesea
 eng_to_ipa
 prosodic
 viphoneme
+aiohttp
