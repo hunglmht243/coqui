@@ -5,7 +5,7 @@ scipy
 torch
 torchaudio
 soundfile
-librosa
+librosa==0.8.0
 numba
 inflect
 tqdm
@@ -18,24 +18,26 @@ flask
 # deps for inference
 pysbd
 # deps for notebooks
-umap-learn
+umap-learn==0.5.1
 pandas
 # deps for training
 matplotlib
 # coqui stack
-trainer
+trainer==0.0.20
 # config management
-coqpit
+coqpit>=0.0.16
 # chinese g2p deps
 jieba
 pypinyin
 # japanese g2p deps
-mecab-python3
-unidic-lite
+mecab-python3==1.0.5
+unidic-lite==1.0.8
+# gruut+supported langs
+gruut[de]==2.2.3
 # deps for korean
 jamo
 nltk
-g2pkk
+g2pkk>=0.1.1
 vinorm
 underthesea
 eng_to_ipa
