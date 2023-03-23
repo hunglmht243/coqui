@@ -4,7 +4,7 @@ import xml.etree.ElementTree as ET
 from glob import glob
 from pathlib import Path
 from typing import List
-
+import csv
 import pandas as pd
 from tqdm import tqdm
 
@@ -401,6 +401,23 @@ def vctk(root_path, meta_files=None, wavs_path="wav48_silence_trimmed", mic="mic
         else:
             print(f" [!] wav files don't exist - {wav_file}")
     return items
+
+
+
+def vi_dataset(root_path, meta_files, wavs_path="wavs", ignored_speakers=None):
+
+    items = []
+    with open(meta_files,'r', encoding='utf8') as tsvfile:
+        reader = csv.DictReader(tsvfile, delimiter='\t')
+        for row in reader:
+            wav_file = os.path.join(root_path, wavs_path, row["path"])
+            items.append(
+                {"text": row["sentence"], "audio_file": wav_file, "speaker_name": row["client_id"], "root_path": root_path}
+            )
+   
+    return items
+
+
 
 
 def vctk_old(root_path, meta_files=None, wavs_path="wav48", ignored_speakers=None):

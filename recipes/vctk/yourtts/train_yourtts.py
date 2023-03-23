@@ -46,7 +46,7 @@ SAMPLE_RATE = 16000
 MAX_AUDIO_LEN_IN_SECONDS = 10
 
 ### Download VCTK dataset
-VCTK_DOWNLOAD_PATH = os.path.join(CURRENT_PATH, "VCTK")
+VCTK_DOWNLOAD_PATH = os.path.join(CURRENT_PATH, "vi_dataset")
 # Define the number of threads used during the audio resampling
 NUM_RESAMPLE_THREADS = 10
 # Check if VCTK dataset is not already downloaded, if not download it
@@ -57,25 +57,13 @@ if not os.path.exists(VCTK_DOWNLOAD_PATH):
 
 # init configs
 vctk_config = BaseDatasetConfig(
-    formatter="vctk",
-    dataset_name="vctk",
-    meta_file_train="",
+    formatter="vi_dataset",
+    dataset_name="vi_dataset",
+    meta_file_train="final.tsv",
     meta_file_val="",
     path=VCTK_DOWNLOAD_PATH,
-    language="en",
-    ignored_speakers=[
-        "p261",
-        "p225",
-        "p294",
-        "p347",
-        "p238",
-        "p234",
-        "p248",
-        "p335",
-        "p245",
-        "p326",
-        "p302",
-    ],  # Ignore the test speakers to full replicate the paper experiment
+    language="vi",
+ # Ignore the test speakers to full replicate the paper experiment
 )
 
 # Add here all datasets configs, in our case we just want to train with the VCTK dataset then we need to add just VCTK. Note: If you want to added new datasets just added they here and it will automatically compute the speaker embeddings (d-vectors) for this new dataset :)
@@ -164,9 +152,9 @@ config = VitsConfig(
     save_checkpoints=True,
     target_loss="loss_1",
     print_eval=False,
-    use_phonemes=False,
-    phonemizer="espeak",
-    phoneme_language="en",
+    use_phonemes=True,
+    phonemizer="vi_phonemizer",
+    phoneme_language="vi",
     compute_input_seq_cache=True,
     add_blank=True,
     text_cleaner="multilingual_cleaners",
@@ -191,35 +179,11 @@ config = VitsConfig(
     mixed_precision=False,
     test_sentences=[
         [
-            "It took me quite a long time to develop a voice, and now that I have it I'm not going to be silent.",
-            "VCTK_p277",
+            "nghe tiếng thở dài não ruột của cô vị khách cũng buồn theo",
+            "d452be36c457f6dd9204b5aa6c94b9239eab7236303b3d8e32df142027188f73f4c52582950b99167642418e163b951f077e4e9b02f0f94c74d08e51f37aa80e",
             None,
-            "en",
-        ],
-        [
-            "Be a voice, not an echo.",
-            "VCTK_p239",
-            None,
-            "en",
-        ],
-        [
-            "I'm sorry Dave. I'm afraid I can't do that.",
-            "VCTK_p258",
-            None,
-            "en",
-        ],
-        [
-            "This cake is great. It's so delicious and moist.",
-            "VCTK_p244",
-            None,
-            "en",
-        ],
-        [
-            "Prior to November 22, 1963.",
-            "VCTK_p305",
-            None,
-            "en",
-        ],
+            "vi",
+        ]
     ],
     # Enable the weighted sampler
     use_weighted_sampler=True,
